@@ -2,5 +2,8 @@
   "hosted-zone:account=607477397669:domainName=dinsor.org:region=us-east-1": {
     "Id": "/hostedzone/Z00134441RFOSCHX50CYK",
     "Name": "dinsor.org."
-  }
+  },
+  "acknowledged-issue-numbers": [
+    34892
+  ]
 }
