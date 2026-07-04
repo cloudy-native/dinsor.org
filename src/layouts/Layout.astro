@@ -1,0 +1,45 @@
+---
+import '../styles/globals.css';
+import Navbar from '../components/Navbar.astro';
+
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const { 
+	title = "Dinsor", 
+	description = "Portfolio and creative works of Dinsor (Stephen Harrison) in Bangkok." 
+} = Astro.props;
+---
+
+<!doctype html>
+<html lang="en" class="dark">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={Astro.url.href} />
+		<meta property="og:image" content={new URL('/images/dinsor.jpg', Astro.site).href} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={new URL('/images/dinsor.jpg', Astro.site).href} />
+
+	</head>
+	<body class="min-h-screen bg-background text-foreground">
+		<Navbar />
+		<main class="container mx-auto max-w-7xl px-6 pt-16 flex-grow">
+			<slot />
+		</main>
+		<footer class="w-full flex items-center justify-center py-6 border-t border-gray-200 dark:border-gray-800">
+			<p class="text-sm text-default-600">© {new Date().getFullYear()} Dinsor. All rights reserved.</p>
+		</footer>
+	</body>
+</html>

@@ -1,3 +1,31 @@
 @import "tailwindcss";
 
-@config "../../tailwind.config.js"
+@theme {
+  --color-background: #FAFAF8;
+  --color-foreground: #1C2E1C;
+  --color-primary: #4A7C4A;
+  --color-secondary: #658B4E;
+  --color-content1: #ffffff;
+  --color-default-500: #64748b;
+  --color-default-600: #475569;
+  --color-default-700: #334155;
+}
+
+/* Dinsor custom theme */
+html {
+  scroll-behavior: smooth;
+}
+
+.dark {
+  --color-background: #0f172a;
+  --color-foreground: #f1f5f9;
+  --color-content1: #1e293b;
+  --color-default-500: #94a3b8;
+  --color-default-600: #cbd5e1;
+  --color-default-700: #e2e8f0;
+}
+
+/* Convenience */
+.text-primary { color: var(--color-primary); }
+.text-secondary { color: var(--color-secondary); }
+.bg-content1 { background-color: var(--color-content1); }
