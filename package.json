@@ -4,12 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "tsc && vite build",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
     "lint": "eslint --fix",
-    "preview": "vite preview"
+    "astro": "astro"
   },
   "dependencies": {
+    "@astrojs/react": "^6.0.1",
     "@heroui/button": "2.2.27",
     "@heroui/card": "^2.2.25",
     "@heroui/code": "2.2.21",
@@ -29,6 +31,7 @@
     "@react-types/shared": "3.32.1",
     "@tailwindcss/postcss": "4.1.11",
     "@tailwindcss/vite": "4.1.11",
+    "astro": "^7.0.6",
     "clsx": "2.1.1",
     "framer-motion": "11.18.2",
     "lucide-react": "^0.545.0",

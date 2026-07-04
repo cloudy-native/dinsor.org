@@ -1,3 +1,7 @@
-@import "tailwindcss";
+/* Tailwind v4 via PostCSS plugin + legacy directives for compatibility */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@config "../../tailwind.config.js"
+/* Point to our JS config (HeroUI plugin + custom green theme) */
+@config "../../tailwind.config.js";

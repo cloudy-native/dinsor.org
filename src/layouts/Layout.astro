@@ -1,0 +1,36 @@
+---
+import "@/styles/globals.css";
+import NavbarIsland from "@/components/NavbarIsland";
+import { ThemeSwitchIsland } from "@/components/ThemeSwitchIsland";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" href="/favicon.ico" />
+    <!-- Individual pages can override/extend head content -->
+    <slot name="head" />
+  </head>
+  <body class="min-h-screen bg-background text-foreground">
+    <!-- Navbar as React island (HeroUI + mobile menu etc.) -->
+    <NavbarIsland client:load />
+
+    <main class="container mx-auto max-w-7xl px-6 pt-16 flex-grow">
+      <slot />
+    </main>
+
+    <footer class="w-full flex items-center justify-center py-6 border-t border-default-200">
+      <p class="text-default-600 text-sm">
+        © {new Date().getFullYear()} Dinsor. All rights reserved.
+      </p>
+    </footer>
+  </body>
+</html>
+
+<style is:global>
+  /* Tailwind + HeroUI globals are imported via globals.css */
+</style>
+

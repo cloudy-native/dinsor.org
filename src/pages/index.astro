@@ -1,0 +1,25 @@
+---
+import Layout from "@/layouts/Layout.astro";
+import HomeContent from "@/components/HomeContent";
+
+const title = "Dinsor | Portfolio and Creative Works";
+const description = "Portfolio and creative works of Dinsor (Stephen Harrison) in Bangkok. Art, science, open source websites and photography.";
+---
+
+<Layout>
+  <Fragment slot="head">
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+    <!-- Add more OG / Twitter if desired -->
+  </Fragment>
+
+  <!-- 
+    Home content is currently a React island.
+    This defers lightbox + dropdown optimization as requested.
+    Once the site is stable on Astro we can break it into smaller static pieces + minimal islands.
+  -->
+  <HomeContent client:load />
+</Layout>

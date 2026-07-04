@@ -1,82 +1,52 @@
 import { FC, useState, useEffect } from "react";
-import { VisuallyHidden } from "@react-aria/visually-hidden";
-import { SwitchProps, useSwitch } from "@heroui/switch";
 import clsx from "clsx";
-import { useTheme } from "@heroui/use-theme";
 
 import { SunFilledIcon, MoonFilledIcon } from "@/components/icons";
 
 export interface ThemeSwitchProps {
   className?: string;
-  classNames?: SwitchProps["classNames"];
 }
 
-export const ThemeSwitch: FC<ThemeSwitchProps> = ({
-  className,
-  classNames,
-}) => {
+export const ThemeSwitch: FC<ThemeSwitchProps> = ({ className }) => {
+  const [theme, setThemeState] = useState<"light" | "dark">("light");
   const [isMounted, setIsMounted] = useState(false);
 
-  const { theme, setTheme } = useTheme();
-
-  const {
-    Component,
-    slots,
-    isSelected,
-    getBaseProps,
-    getInputProps,
-    getWrapperProps,
-  } = useSwitch({
-    isSelected: theme === "light",
-    onChange: () => setTheme(theme === "light" ? "dark" : "light"),
-  });
-
+  // Safe theme initialization - works in SSR + client
   useEffect(() => {
-    setIsMounted(true);
-  }, [isMounted]);
+    const stored = localStorage.getItem("theme") as "light" | "dark" | null;
+    const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+    const initial = stored || (prefersDark ? "dark" : "light");
 
-  // Prevent Hydration Mismatch
-  if (!isMounted) return <div className="w-6 h-6" />;
+    setThemeState(initial);
+    document.documentElement.classList.toggle("dark", initial === "dark");
+    setIsMounted(true);
+  }, []);
+
+  const toggleTheme = () => {
+    const newTheme = theme === "light" ? "dark" : "light";
+    setThemeState(newTheme);
+    localStorage.setItem("theme", newTheme);
+    document.documentElement.classList.toggle("dark", newTheme === "dark");
+  };
+
+  // During SSR or before mount, render a stable placeholder to avoid hydration mismatch
+  if (!isMounted) {
+    return <div className={clsx("w-6 h-6", className)} aria-hidden="true" />;
+  }
+
+  const isDark = theme === "dark";
 
   return (
-    <Component
-      aria-label={isSelected ? "Switch to dark mode" : "Switch to light mode"}
-      {...getBaseProps({
-        className: clsx(
-          "px-px transition-opacity hover:opacity-80 cursor-pointer",
-          className,
-          classNames?.base,
-        ),
-      })}
+    <button
+      onClick={toggleTheme}
+      className={clsx(
+        "px-px transition-opacity hover:opacity-80 cursor-pointer text-default-500",
+        className
+      )}
+      aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
     >
-      <VisuallyHidden>
-        <input {...getInputProps()} />
-      </VisuallyHidden>
-      <div
-        {...getWrapperProps()}
-        className={slots.wrapper({
-          class: clsx(
-            [
-              "w-auto h-auto",
-              "bg-transparent",
-              "rounded-lg",
-              "flex items-center justify-center",
-              "group-data-[selected=true]:bg-transparent",
-              "!text-default-500",
-              "pt-px",
-              "px-0",
-              "mx-0",
-            ],
-            classNames?.wrapper,
-          ),
-        })}
-      >
-        {isSelected ? (
-          <MoonFilledIcon size={22} />
-        ) : (
-          <SunFilledIcon size={22} />
-        )}
-      </div>
-    </Component>
+      {isDark ? <SunFilledIcon size={22} /> : <MoonFilledIcon size={22} />}
+    </button>
   );
 };
+
