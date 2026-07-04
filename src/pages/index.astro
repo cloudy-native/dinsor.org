@@ -1,25 +1,252 @@
 ---
-import Layout from "@/layouts/Layout.astro";
-import HomeContent from "@/components/HomeContent";
+import Layout from '../layouts/Layout.astro';
 
 const title = "Dinsor | Portfolio and Creative Works";
 const description = "Portfolio and creative works of Dinsor (Stephen Harrison) in Bangkok. Art, science, open source websites and photography.";
 ---
 
-<Layout>
-  <Fragment slot="head">
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <!-- Add more OG / Twitter if desired -->
-  </Fragment>
+<Layout title={title} description={description}>
+	<section class="flex flex-col gap-16 py-8 md:py-10">
+		<div class="max-w-6xl w-full mx-auto">
+			{/* Hero */}
+			<div class="text-center mb-20">
+				<div class="inline-flex items-center gap-3 mb-8">
+					<span class="text-6xl">✏️</span>
+					<h1 class="text-6xl font-bold">Dinsor</h1>
+				</div>
+			</div>
 
-  <!-- 
-    Home content is currently a React island.
-    This defers lightbox + dropdown optimization as requested.
-    Once the site is stable on Astro we can break it into smaller static pieces + minimal islands.
-  -->
-  <HomeContent client:load />
+			{/* Intro Cards */}
+			<div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
+				<div class="p-6 text-center rounded-2xl border border-gray-200 bg-content1 shadow-sm dark:border-gray-800">
+					<p class="text-lg leading-relaxed">
+						I live in <span class="font-semibold text-primary">Bangkok, Thailand</span>. 
+						My Thai nickname is <span class="font-semibold text-primary">ดินสอ</span>, meaning pencil.
+					</p>
+					<p class="text-sm text-default-500 mt-2">It's pronounced din-sɔ̌ɔ, or Dinsor. Everyone calls me that.</p>
+				</div>
+
+				<div class="p-6 text-center rounded-2xl border border-gray-200 bg-content1 shadow-sm dark:border-gray-800">
+					<p class="text-lg leading-relaxed">
+						My passport says <span class="font-semibold text-secondary">Stephen Harrison</span>.
+					</p>
+					<p class="text-sm text-default-500 mt-2">My bank calls me that.</p>
+				</div>
+
+				<div class="p-6 text-center rounded-2xl border border-gray-200 bg-content1 shadow-sm dark:border-gray-800">
+					<p class="text-lg leading-relaxed">
+						I like <span class="font-semibold text-primary">art</span>. I like <span class="font-semibold text-secondary">science</span>.
+					</p>
+					<p class="text-sm text-default-500 mt-2">I especially like art and science together.</p>
+				</div>
+			</div>
+
+			{/* Contact Links */}
+			<div class="flex flex-wrap items-center justify-center gap-8 mb-16">
+				<a href="mailto:dinsor@dinsor.org" class="flex items-center gap-2 text-default-700 hover:text-primary transition-colors group">
+					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2.01 2.01 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+					</svg>
+					<span class="text-sm">dinsor@dinsor.org</span>
+				</a>
+
+				<a href="https://github.com/cloudy-native" target="_blank" class="flex items-center gap-2 text-default-700 hover:text-primary transition-colors group">
+					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.483 0-.237-.009-.868-.014-1.703-2.782.605-3.369-1.34-3.369-1.34-.454-1.155-1.11-1.462-1.11-1.462-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.295 2.747-1.026 2.747-1.026.546 1.377.203 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.841-2.337 4.687-4.565 4.935.36.31.682.92.682 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.162 22 16.418 22 12c0-5.523-4.477-10-10-10z" />
+					</svg>
+					<span class="text-sm">github.com/cloudy-native</span>
+				</a>
+
+				<a href="https://th.linkedin.com/in/stephenharrison" target="_blank" class="flex items-center gap-2 text-default-700 hover:text-primary transition-colors group">
+					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6zM2 9h4v12H2z" />
+						<circle cx="4" cy="4" r="2" />
+					</svg>
+					<span class="text-sm">linkedin.com/in/stephenharrison</span>
+				</a>
+
+				<!-- Chat -->
+				<button id="chat-btn" class="flex items-center gap-2 text-default-700 hover:text-primary transition-colors group px-3 py-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800">
+					<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 group-hover:scale-110 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+						<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+					</svg>
+					<span class="text-sm">Chat</span>
+				</button>
+			</div>
+
+			{/* Portfolios */}
+			<div class="mt-20">
+				<h2 class="text-5xl font-bold text-center mb-12">Portfolios</h2>
+				<div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+					<a href="https://handycomputerbloke.com" target="_blank" class="group block rounded-2xl overflow-hidden border border-gray-200 bg-content1 shadow-sm hover:shadow-md transition-all dark:border-gray-800">
+						<div class="aspect-video bg-gradient-to-br from-primary-100 to-secondary-100 overflow-hidden">
+							<img src="/images/handycomputerbloke.com.png" alt="Websites" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform" />
+						</div>
+						<div class="p-6">
+							<h3 class="text-2xl font-bold mb-1">Websites</h3>
+							<p class="text-sm text-default-500 mb-3">https://handycomputerbloke.com</p>
+							<p class="text-default-600 text-sm">Always free, always open source, mostly fun.</p>
+						</div>
+					</a>
+
+					<a href="https://thelucidlens.com" target="_blank" class="group block rounded-2xl overflow-hidden border border-gray-200 bg-content1 shadow-sm hover:shadow-md transition-all dark:border-gray-800">
+						<div class="aspect-video bg-gradient-to-br from-primary-100 to-secondary-100 overflow-hidden">
+							<img src="/images/thelucidlens.com.jpg" alt="Photos" class="w-full h-full object-cover group-hover:scale-[1.02] transition-transform" />
+						</div>
+						<div class="p-6">
+							<h3 class="text-2xl font-bold mb-1">Photos</h3>
+							<p class="text-sm text-default-500 mb-3">https://thelucidlens.com</p>
+							<p class="text-default-600 text-sm">Random photos pretending to be curated portfolios.</p>
+						</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Chat Modal -->
+	<div id="chat-modal" class="hidden fixed inset-0 z-50 items-center justify-center p-4">
+		<!-- Backdrop -->
+		<div id="chat-backdrop" class="absolute inset-0 bg-black/60 transition-opacity"></div>
+
+		<!-- Modal content -->
+		<div id="chat-modal-content" class="relative w-full max-w-sm scale-95 rounded-2xl bg-content1 p-6 opacity-0 shadow-xl transition-all duration-200">
+			<!-- Options view -->
+			<div id="chat-options">
+				<div class="mb-4 flex items-center justify-between">
+					<h3 class="text-lg font-semibold">Chat with me</h3>
+					<button id="chat-close" class="text-default-500 hover:text-foreground text-xl leading-none">×</button>
+				</div>
+
+				<div class="grid grid-cols-1 gap-3 sm:grid-cols-2">
+					<button data-app="whatsapp" class="group flex flex-col items-center rounded-2xl border border-gray-200 p-5 text-center transition-all hover:border-primary hover:bg-gray-50 active:scale-[0.985] dark:border-gray-700 dark:hover:bg-gray-800">
+						<img src="/images/whatsapp.png" alt="WhatsApp" class="mb-3 h-14 w-14 rounded-xl border bg-white object-contain shadow-sm" />
+						<span class="font-semibold">WhatsApp</span>
+						<span class="mt-0.5 text-xs text-default-500 group-hover:text-primary">Show QR code</span>
+					</button>
+
+					<button data-app="line" class="group flex flex-col items-center rounded-2xl border border-gray-200 p-5 text-center transition-all hover:border-primary hover:bg-gray-50 active:scale-[0.985] dark:border-gray-700 dark:hover:bg-gray-800">
+						<img src="/images/lineapp.png" alt="LINE" class="mb-3 h-14 w-14 rounded-xl border bg-white object-contain shadow-sm" />
+						<span class="font-semibold">LINE</span>
+						<span class="mt-0.5 text-xs text-default-500 group-hover:text-primary">Show QR code</span>
+					</button>
+				</div>
+			</div>
+
+			<!-- Single QR view -->
+			<div id="chat-qr-view" class="hidden">
+				<div class="mb-4 flex items-center justify-between">
+					<div>
+						<h3 id="qr-app-name" class="text-lg font-semibold"></h3>
+						<p class="text-xs text-default-500">Scan to start chat</p>
+					</div>
+					<div class="flex gap-2">
+						<button id="qr-back" class="rounded-lg px-3 py-1 text-sm text-default-500 hover:bg-gray-100 dark:hover:bg-gray-800">Back</button>
+						<button id="qr-close" class="text-xl leading-none text-default-500 hover:text-foreground">×</button>
+					</div>
+				</div>
+
+				<div class="flex justify-center py-4">
+					<img id="qr-image" class="h-auto w-[240px] rounded-2xl border-4 border-gray-100 bg-white p-3 shadow-md dark:border-gray-700 sm:w-[260px] md:w-[300px]" alt="QR code" />
+				</div>
+
+				<p class="mt-3 text-center text-sm text-default-500">
+					Open the app and scan this code.
+				</p>
+			</div>
+		</div>
+	</div>
 </Layout>
+
+<script>
+	const chatBtn = document.getElementById('chat-btn');
+	const modal = document.getElementById('chat-modal');
+	const backdrop = document.getElementById('chat-backdrop');
+
+	const optionsView = document.getElementById('chat-options');
+	const qrView = document.getElementById('chat-qr-view');
+
+	const appNameEl = document.getElementById('qr-app-name');
+	const qrImage = document.getElementById('qr-image');
+
+	const closeBtns = [document.getElementById('chat-close'), document.getElementById('qr-close')];
+	const backBtn = document.getElementById('qr-back');
+
+	let currentApp = null;
+
+	const qrData = {
+		whatsapp: { name: 'WhatsApp', src: '/images/whatsapp.png' },
+		line: { name: 'LINE', src: '/images/lineapp.png' }
+	};
+
+	function showModal() {
+		modal.classList.remove('hidden');
+		modal.classList.add('flex');
+		// Trigger animation on next frame
+		requestAnimationFrame(() => {
+			const content = document.getElementById('chat-modal-content');
+			content.classList.remove('scale-95', 'opacity-0');
+			content.classList.add('scale-100', 'opacity-100');
+		});
+		showOptions();
+	}
+
+	function hideModal() {
+		const content = document.getElementById('chat-modal-content');
+		content.classList.remove('scale-100', 'opacity-100');
+		content.classList.add('scale-95', 'opacity-0');
+
+		// Wait for transition then hide
+		setTimeout(() => {
+			modal.classList.remove('flex');
+			modal.classList.add('hidden');
+		}, 150);
+	}
+
+	function showOptions() {
+		optionsView.classList.remove('hidden');
+		qrView.classList.add('hidden');
+	}
+
+	function showQR(app) {
+		const data = qrData[app];
+		if (!data) return;
+
+		currentApp = app;
+		appNameEl.textContent = data.name;
+		qrImage.src = data.src;
+		qrImage.alt = `${data.name} QR Code`;
+
+		optionsView.classList.add('hidden');
+		qrView.classList.remove('hidden');
+	}
+
+	// Open modal
+	chatBtn?.addEventListener('click', showModal);
+
+	// Close handlers
+	closeBtns.forEach(btn => btn?.addEventListener('click', hideModal));
+	backdrop?.addEventListener('click', hideModal);
+
+	// Back to options
+	backBtn?.addEventListener('click', showOptions);
+
+	// Option selection
+	optionsView.querySelectorAll('button[data-app]').forEach(btn => {
+		btn.addEventListener('click', () => {
+			const app = btn.dataset.app;
+			showQR(app);
+		});
+	});
+
+	// Keyboard escape
+	document.addEventListener('keydown', (e) => {
+		if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
+			if (!qrView.classList.contains('hidden')) {
+				showOptions();
+			} else {
+				hideModal();
+			}
+		}
+	});
+</script>

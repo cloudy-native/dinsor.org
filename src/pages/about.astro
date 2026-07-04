@@ -1,29 +1,22 @@
 ---
-import Layout from "@/layouts/Layout.astro";
+import Layout from '../layouts/Layout.astro';
 
-const title = "About Me | Dinsor";
-const description = "Learn more about Dinsor (Stephen Harrison) - art, science, and creative work at the intersection.";
+const title = "About | Dinsor";
+const description = "About Stephen Harrison (Dinsor) — making things at the intersection of art and technology.";
 ---
 
-<Layout>
-  <Fragment slot="head">
-    <title>{title}</title>
-    <meta name="description" content={description} />
-    <meta property="og:title" content={title} />
-    <meta property="og:description" content={description} />
-  </Fragment>
+<Layout title={title} description={description}>
+	<section class="flex flex-col items-center justify-center gap-8 py-8 md:py-10">
+		<div class="max-w-3xl w-full">
+			<h1 class="text-5xl font-bold mb-8">✏️ About Me</h1>
 
-  <section class="flex flex-col items-center justify-center gap-8 py-8 md:py-10">
-    <div class="max-w-3xl w-full">
-      <h1 class="text-5xl font-bold mb-8">✏️ About Me</h1>
-
-      <div class="space-y-6 text-lg text-default-700">
-        <p>I make things at the intersection of art and tech.</p>
-        <p>
-          Take a look around and feel free to explore my portfolios and get
-          in touch if you'd like to collaborate.
-        </p>
-      </div>
-    </div>
-  </section>
+			<div class="space-y-6 text-lg text-default-700">
+				<p>I make things at the intersection of art and tech.</p>
+				<p>
+					Take a look around and feel free to explore my portfolios and get
+					in touch if you'd like to collaborate.
+				</p>
+			</div>
+		</div>
+	</section>
 </Layout>
