@@ -6,10 +6,9 @@ import {
 import {
 	CachePolicy,
 	Distribution,
-	OriginAccessIdentity,
 	ViewerProtocolPolicy,
 } from "aws-cdk-lib/aws-cloudfront";
-import { S3Origin } from "aws-cdk-lib/aws-cloudfront-origins";
+import { S3StaticWebsiteOrigin } from "aws-cdk-lib/aws-cloudfront-origins";
 import { ARecord, HostedZone, RecordTarget } from "aws-cdk-lib/aws-route53";
 import { CloudFrontTarget } from "aws-cdk-lib/aws-route53-targets";
 import { BlockPublicAccess, Bucket } from "aws-cdk-lib/aws-s3";
@@ -31,7 +30,7 @@ export class DinsorOrgStack extends Stack {
 			websiteIndexDocument: "index.html",
 			websiteErrorDocument: "404.html",
 			publicReadAccess: true,
-			blockPublicAccess: BlockPublicAccess.BLOCK_ACLS,
+			blockPublicAccess: BlockPublicAccess.BLOCK_ACLS_ONLY,
 			removalPolicy: RemovalPolicy.DESTROY,
 		});
 
@@ -51,19 +50,12 @@ export class DinsorOrgStack extends Stack {
 			validation: CertificateValidation.fromDns(hostedZone),
 		});
 
-		// Create origin access identity for S3
-		const originAccessIdentity = new OriginAccessIdentity(
-			this,
-			"OriginAccessIdentity",
-		);
-		websiteBucket.grantRead(originAccessIdentity);
-
 		// Create CloudFront distribution for website
 		const websiteDistribution = new Distribution(this, "WebsiteDistribution", {
 			certificate: certificate,
 			domainNames: [domainName],
 			defaultBehavior: {
-				origin: new S3Origin(websiteBucket, { originAccessIdentity }),
+				origin: new S3StaticWebsiteOrigin(websiteBucket),
 				viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
 				cachePolicy: CachePolicy.CACHING_OPTIMIZED,
 			},
@@ -92,9 +84,9 @@ export class DinsorOrgStack extends Stack {
 			value: websiteBucket.bucketName,
 		});
 
-    new CfnOutput(this, "CertificateArn", {
-      description: "The ARN of the certificate",
-      value: certificate.certificateArn,
-    });
+		new CfnOutput(this, "CertificateArn", {
+			description: "The ARN of the certificate",
+			value: certificate.certificateArn,
+		});
 	}
 }
