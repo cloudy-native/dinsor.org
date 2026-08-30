@@ -1,0 +1,134 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import DocsNav from "../components/DocsNav.astro";
+
+const title = "About | Dinsor";
+const description =
+	"About Dinsor (Stephen Harrison) — portfolio of web applications, photography, furniture, and creative tools.";
+
+const toc = [
+	{ href: "#philosophy", label: "Philosophy" },
+	{ href: "#inspiration", label: "Inspiration" },
+	{ href: "#technology", label: "Technology" },
+	{ href: "#contact", label: "Contact" },
+	{ href: "#personal", label: "Personal" },
+];
+---
+
+<Layout title={title} description={description}>
+	<Navbar />
+	<div class="docs">
+		<DocsNav />
+		<article class="docs-prose">
+			<h1>About Me</h1>
+			<p class="lede">
+				Welcome to <a href="https://dinsor.org">dinsor.org</a> — my portfolio of
+				web applications, photography, furniture, and creative tools.
+			</p>
+
+			<nav class="toc" aria-label="On this page">
+				<p class="toc-label">On this page</p>
+				{toc.map((item) => <a href={item.href}>{item.label}</a>)}
+			</nav>
+
+			<section id="philosophy">
+				<h2>Philosophy</h2>
+				<p>
+					I build web applications that solve real problems: photography
+					platforms, retirement and financial planning tools, educational
+					resources, and more. The through-line is practical software with
+					clear purpose.
+				</p>
+				<p>
+					I care about interfaces that stay out of the way. Tech should be
+					simple, functional, and usable—not a source of friction.
+				</p>
+			</section>
+
+			<section id="inspiration">
+				<h2>Inspiration</h2>
+				<p>
+					Most projects start when I need a tool that doesn’t exist—or when
+					the existing options are incomplete or hard to trust.
+					<a
+						href="https://visacheatsheet.com"
+						target="_blank"
+						rel="noopener noreferrer">visacheatsheet.com</a
+					>
+					came from wanting impartial, step-by-step visa guidance; a lot of
+					what I found was either agency marketing or dense government
+					material. The same impulse produced
+					<a
+						href="https://brandboffin.com"
+						target="_blank"
+						rel="noopener noreferrer">brandboffin.com</a
+					>
+					and
+					<a
+						href="https://chakrathemes.com"
+						target="_blank"
+						rel="noopener noreferrer">chakrathemes.com</a
+					>. All three are free for anyone to use.
+				</p>
+			</section>
+
+			<section id="technology">
+				<h2>Technology</h2>
+				<p>
+					I favour solutions that stay lean.
+					<a
+						href="https://timezone.guru"
+						target="_blank"
+						rel="noopener noreferrer">timezone.guru</a
+					>
+					does its timezone math—including Daylight Saving Time—entirely in
+					the browser, with no backend required. Everything I build is open
+					source and free. If you find a bug or have a feature idea, get in
+					touch. More on the <a href="/technology">technology</a> page.
+				</p>
+			</section>
+
+			<section id="contact">
+				<h2>Contact</h2>
+				<p>
+					Email
+					<a href="mailto:dinsor@dinsor.org">dinsor@dinsor.org</a>
+					or find me on
+					<a
+						href="https://www.linkedin.com/in/stephenharrison/"
+						target="_blank"
+						rel="noopener noreferrer">LinkedIn</a
+					>.
+				</p>
+			</section>
+
+			<section id="personal">
+				<h2>Personal</h2>
+				<p>
+					I grew up in the UK, then worked in research and tech in the
+					US—from early-stage startups to large companies. I’m based in
+					Bangkok, Thailand. Locals call me ดินสอ (<em>din-sǒr</em>), or
+					“pencil,” a nod to always having ideas on the go.
+				</p>
+				<p>
+					I’ve taught music composition, furniture making, photography, and
+					cloud architecture—a mix that reflects a broad set of interests
+					rather than a single lane.
+				</p>
+				<p>Thanks for looking around.</p>
+			</section>
+
+			<nav class="pager" aria-label="Pager">
+				<a href="/">
+					<span class="label">Previous</span>
+					Home
+				</a>
+				<a class="next" href="/technology">
+					<span class="label">Next</span>
+					Technology
+				</a>
+			</nav>
+		</article>
+	</div>
+</Layout>

@@ -1,0 +1,23 @@
+---
+import type { Portfolio } from "../data/portfolios";
+
+interface Props {
+	portfolio: Portfolio;
+}
+
+const { portfolio } = Astro.props;
+const host = portfolio.url.replace(/^https?:\/\//, "");
+---
+
+<a
+	class="demo-card"
+	href={portfolio.url}
+	target="_blank"
+	rel="noopener noreferrer"
+>
+	<div class="shot">
+		<img src={portfolio.image} alt={portfolio.title} loading="lazy" />
+	</div>
+	<p class="demo-title">{portfolio.title}</p>
+	<p class="demo-desc">{host}. {portfolio.description}</p>
+</a>

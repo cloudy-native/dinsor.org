@@ -34,12 +34,6 @@ export class DinsorOrgStack extends Stack {
 			removalPolicy: RemovalPolicy.DESTROY,
 		});
 
-		// Deploy website files from ../public to S3 bucket
-		new BucketDeployment(this, "WebsiteDeployment", {
-			sources: [Source.asset("../dist")],
-			destinationBucket: websiteBucket,
-		});
-
 		const hostedZone = HostedZone.fromLookup(this, "HostedZone", {
 			domainName,
 		});
@@ -59,6 +53,14 @@ export class DinsorOrgStack extends Stack {
 				viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
 				cachePolicy: CachePolicy.CACHING_OPTIMIZED,
 			},
+		});
+
+		// Deploy website files and invalidate CloudFront cache
+		new BucketDeployment(this, "WebsiteDeployment", {
+			sources: [Source.asset("../dist")],
+			destinationBucket: websiteBucket,
+			distribution: websiteDistribution,
+			distributionPaths: ["/*"],
 		});
 
 		// Create DNS records for website

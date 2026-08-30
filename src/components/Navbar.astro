@@ -1,0 +1,35 @@
+---
+const pathname = Astro.url.pathname.replace(/\/$/, "") || "/";
+const isHome = pathname === "/";
+
+const links = [
+    { href: "/about", label: "About" },
+    { href: "/technology", label: "Technology" },
+];
+---
+
+<div class:list={["eyebrow", !isHome && "site-bar"]}>
+    {
+        isHome ? (
+            <span>Studio · Bangkok</span>
+        ) : (
+            <a class="mark-link" href="/">
+                Dinsor
+            </a>
+        )
+    }
+    <span class="hero-links">
+        {
+            links.map(({ href, label }) => {
+                const active =
+                    pathname === href || pathname.startsWith(`${href}/`);
+                return (
+                    <a href={href} aria-current={active ? "page" : undefined}>
+                        {label}
+                    </a>
+                );
+            })
+        }
+        <button type="button" id="chat-btn">CONTACT</button>
+    </span>
+</div>

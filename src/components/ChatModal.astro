@@ -1,0 +1,107 @@
+<div id="chat-modal" class="chat-modal">
+	<div id="chat-backdrop" class="chat-backdrop"></div>
+	<div class="chat-card">
+		<div id="chat-options" class="chat-options">
+			<div class="chat-head">
+				<h3>Contact</h3>
+				<button type="button" id="chat-close" class="chat-close" aria-label="Close">×</button>
+			</div>
+			<div class="chat-apps">
+				<button type="button" class="chat-app" data-app="line">
+					<img src="/images/lineapp.png" alt="" />
+					<span class="name">LINE</span>
+					<span class="hint">Show QR code</span>
+				</button>
+				<button type="button" class="chat-app" data-app="whatsapp">
+					<img src="/images/whatsapp.png" alt="" />
+					<span class="name">WhatsApp</span>
+					<span class="hint">Show QR code</span>
+				</button>
+				<a class="chat-app" href="mailto:dinsor@dinsor.org">
+					<span class="mail-mark" aria-hidden="true">@</span>
+					<span class="name">Email</span>
+					<span class="hint">dinsor@dinsor.org</span>
+				</a>
+			</div>
+		</div>
+
+		<div id="chat-qr-view" class="chat-qr">
+			<div class="chat-head">
+				<div>
+					<h3 id="qr-app-name"></h3>
+					<p>Scan to start chat</p>
+				</div>
+				<div>
+					<button type="button" id="qr-back" class="chat-back">Back</button>
+					<button type="button" id="qr-close" class="chat-close" aria-label="Close">×</button>
+				</div>
+			</div>
+			<img id="qr-image" alt="QR code" />
+			<p class="scan">Open the app and scan this code.</p>
+		</div>
+	</div>
+</div>
+
+<script>
+	const chatBtn = document.getElementById("chat-btn");
+	const modal = document.getElementById("chat-modal");
+	const backdrop = document.getElementById("chat-backdrop");
+	const optionsView = document.getElementById("chat-options");
+	const qrView = document.getElementById("chat-qr-view");
+	const appNameEl = document.getElementById("qr-app-name");
+	const qrImage = document.getElementById("qr-image") as HTMLImageElement | null;
+
+	const closeBtns = [
+		document.getElementById("chat-close"),
+		document.getElementById("qr-close"),
+	];
+	const backBtn = document.getElementById("qr-back");
+
+	const qrData: Record<string, { name: string; src: string }> = {
+		whatsapp: { name: "WhatsApp", src: "/images/whatsapp.png" },
+		line: { name: "LINE", src: "/images/lineapp.png" },
+	};
+
+	function showModal() {
+		if (!modal) return;
+		modal.classList.add("is-open");
+		showOptions();
+	}
+
+	function hideModal() {
+		if (!modal) return;
+		modal.classList.remove("is-open");
+	}
+
+	function showOptions() {
+		optionsView?.classList.remove("is-hidden");
+		qrView?.classList.remove("is-open");
+	}
+
+	function showQR(app: string) {
+		const data = qrData[app];
+		if (!data || !appNameEl || !qrImage) return;
+		appNameEl.textContent = data.name;
+		qrImage.src = data.src;
+		qrImage.alt = `${data.name} QR code`;
+		optionsView?.classList.add("is-hidden");
+		qrView?.classList.add("is-open");
+	}
+
+	chatBtn?.addEventListener("click", showModal);
+	closeBtns.forEach((btn) => btn?.addEventListener("click", hideModal));
+	backdrop?.addEventListener("click", hideModal);
+	backBtn?.addEventListener("click", showOptions);
+	optionsView?.querySelectorAll("[data-app]").forEach((btn) => {
+		btn.addEventListener("click", () => {
+			const app = (btn as HTMLButtonElement).dataset.app;
+			if (app) showQR(app);
+		});
+	});
+	document.addEventListener("keydown", (e) => {
+		if (e.key === "Escape" && modal?.classList.contains("is-open")) {
+			if (qrView?.classList.contains("is-open")) showOptions();
+			else hideModal();
+		}
+	});
+</script>

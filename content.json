@@ -1,0 +1,142 @@
+{
+  "type": "landing-page",
+  "lang": "en",
+  "brief": {
+    "audience": "Visitors meeting Dinsor and the sites he ships",
+    "job": "Show the studio, the work, and how to reach him",
+    "template": "landing-page-en",
+    "formats": ["html"],
+    "page_target": 1,
+    "narrative": "Name the studio, show shipped sites, then principles and contact",
+    "required_facts": ["Bangkok", "Stephen Harrison", "dinsor@dinsor.org", "open source"],
+    "required_assets": [
+      "public/images/thelucidlens.com.jpg",
+      "public/images/fallingtreestudio.com.png",
+      "public/images/lucidmusician.com.png",
+      "public/images/lucidgeometry.com.png",
+      "public/images/dinsor.jpg"
+    ],
+    "acceptance_checks": [
+      "parchment canvas and ink-blue only",
+      "gallery uses real screenshots",
+      "about and technology remain reachable",
+      "chat WhatsApp and LINE still work",
+      "375px and 1280px screenshots"
+    ],
+    "preserve": [
+      "portfolio URLs and descriptions",
+      "email github linkedin",
+      "about and technology copy"
+    ],
+    "explicit_deviations": [
+      "No pricing section: this is a personal studio not a product",
+      "Astro multi-page site instead of a single HTML file",
+      "JSON-LD is Person not SoftwareApplication"
+    ]
+  },
+  "content": {
+    "category": "Studio",
+    "product_name": "Dinsor / ดินสอ",
+    "tagline": "Art and science share a bench.",
+    "facts": ["Bangkok", "Open source", "Free to use", "dinsor@dinsor.org"],
+    "cta": {
+      "primary": "Write to me",
+      "secondary": "See the work"
+    },
+    "gallery": [
+      {
+        "image": "/images/thelucidlens.com.jpg",
+        "caption": "Snapshots, pretending."
+      },
+      {
+        "image": "/images/fallingtreestudio.com.png",
+        "caption": "Wood and epoxy, by hand."
+      },
+      {
+        "image": "/images/lucidmusician.com.png",
+        "caption": "Harmony from old scores."
+      },
+      {
+        "image": "/images/lucidgeometry.com.png",
+        "caption": "Spirograph, in 3D."
+      }
+    ],
+    "features": [
+      {
+        "name": "The Lucid Lens",
+        "subtitle": "Photographs that pretend.",
+        "description": "A photography site that treats snapshots as if they were a curated portfolio. The joke is the point, and the pictures still have to hold."
+      },
+      {
+        "name": "Falling Tree Studio",
+        "subtitle": "Furniture from the bench.",
+        "description": "Wood and epoxy tables made by hand. The site is a gallery for pieces that already exist in the room, not a catalog of renders."
+      },
+      {
+        "name": "Tools that should exist",
+        "subtitle": "Visa, timezone, weather, money.",
+        "description": "Visa Cheat Sheet, Timezone Guru, Weather Wombat, and Retire Guru started because the existing options were sales copy or too dense to trust. They stay free."
+      },
+      {
+        "name": "Generative play",
+        "subtitle": "Geometry and harmony.",
+        "description": "Lucid Geometry extends Spirograph into interactive 3D. Lucid Musician trains a harmony model on centuries of composition. Art and science in the same loop."
+      }
+    ],
+    "principles": [
+      {
+        "title": "Static where static is enough",
+        "description": "Ship HTML first. Add a runtime only when the interaction needs it."
+      },
+      {
+        "title": "Infrastructure lives with the app",
+        "description": "DNS, certificates, CDN, and deploy sit in CDK next to the site."
+      },
+      {
+        "title": "AI removes drudgery",
+        "description": "Assistants help name, structure, and search. They do not become the product."
+      },
+      {
+        "title": "Boring cloud, quiet scale",
+        "description": "S3, CloudFront, Route 53, Lambda, DynamoDB. Pieces that stay out of the way."
+      },
+      {
+        "title": "Leave room for craft",
+        "description": "Photography, furniture, and music tools get the same care as the serious apps."
+      },
+      {
+        "title": "Open source and free",
+        "description": "The sites are there to be used. Bugs and ideas are welcome by email."
+      }
+    ],
+    "faq": [
+      {
+        "q": "What is dinsor.org?",
+        "a": "A personal studio site for Dinsor (Stephen Harrison). It is not an agency, a product company, or a theme shop."
+      },
+      {
+        "q": "Who is Dinsor?",
+        "a": "Stephen Harrison. Locals in Bangkok call him ดินสอ (din-sɔ̌ɔ), meaning pencil. The passport and the bank use Stephen."
+      },
+      {
+        "q": "Are these sites for sale?",
+        "a": "No. The public sites are free to use and open source. Contact above if you want to talk about something else."
+      },
+      {
+        "q": "What kind of work is this?",
+        "a": "Photography, handmade furniture, and small web tools. The through-line is hands-on art and practical software with a clear purpose."
+      },
+      {
+        "q": "How do I get in touch?",
+        "a": "Open Contact in the header for LINE, WhatsApp, and email at dinsor@dinsor.org. LinkedIn is in the footer."
+      },
+      {
+        "q": "What is the stack?",
+        "a": "Astro, TypeScript, Tailwind or CSS, React islands when needed, hosted on S3 and CloudFront via AWS CDK. The technology page has the notes."
+      }
+    ],
+    "footer": {
+      "ethos": "A pencil is for ideas on the go."
+    }
+  }
+}

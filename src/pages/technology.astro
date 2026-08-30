@@ -1,0 +1,310 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Navbar from "../components/Navbar.astro";
+import DocsNav from "../components/DocsNav.astro";
+
+const title = "Technology | Dinsor";
+const description =
+	"How the sites are built today — Astro, TypeScript, React, Tailwind, AWS, and a few carefully chosen tools.";
+
+const toc = [
+	{ href: "#default-stack", label: "The default stack" },
+	{ href: "#astro", label: "Astro" },
+	{ href: "#react", label: "React" },
+	{ href: "#typescript-tailwind", label: "TypeScript & Tailwind" },
+	{ href: "#3d-data-search", label: "3D, data & search" },
+	{ href: "#ai", label: "AI in the product" },
+	{ href: "#audio", label: "Audio plugins" },
+	{ href: "#cloud", label: "Cloud & infrastructure" },
+	{ href: "#docs", label: "Docs & older friends" },
+	{ href: "#build", label: "Build tooling" },
+	{ href: "#principles", label: "Principles" },
+];
+---
+
+<Layout title={title} description={description}>
+	<Navbar />
+	<div class="docs">
+		<DocsNav />
+		<article class="docs-prose">
+			<h1>Technology</h1>
+			<p class="lede">
+				Notes on the stack behind these sites — what I reach for now, and why
+				it stays enjoyable to ship with.
+			</p>
+
+			<nav class="toc" aria-label="On this page">
+				<p class="toc-label">On this page</p>
+				{toc.map((item) => <a href={item.href}>{item.label}</a>)}
+			</nav>
+
+			<section id="default-stack">
+				<h2>The default stack</h2>
+				<p>
+					Most new work lands on the same small set of tools.
+					<a href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a>
+					for the site,
+					<a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer">TypeScript</a>
+					everywhere it matters,
+					<a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer">Tailwind CSS</a>
+					for styling, and
+					<a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React</a>
+					only where the UI actually needs a client runtime. Hosting is
+					static assets on
+					<a href="https://aws.amazon.com/s3/" target="_blank" rel="noopener noreferrer">S3</a>, a
+					<a href="https://aws.amazon.com/cloudfront/" target="_blank" rel="noopener noreferrer">CloudFront</a>
+					edge, and
+					<a href="https://aws.amazon.com/cdk/" target="_blank" rel="noopener noreferrer">AWS CDK</a>
+					for the whole surface — DNS, certificates, CDN, and deploy in one
+					language.
+				</p>
+				<p>
+					That’s the shape of this site,
+					<a href="https://thelucidlens.com" target="_blank" rel="noopener noreferrer">The Lucid Lens</a>,
+					<a href="https://fallingtreestudio.com" target="_blank" rel="noopener noreferrer">Falling Tree Studio</a>,
+					<a href="https://timezone.guru" target="_blank" rel="noopener noreferrer">Timezone Guru</a>,
+					<a href="https://visacheatsheet.com" target="_blank" rel="noopener noreferrer">Visa Cheat Sheet</a>,
+					and several others. Same ideas, different content.
+				</p>
+			</section>
+
+			<section id="astro">
+				<h2>Astro</h2>
+				<p>
+					<a href="https://astro.build/" target="_blank" rel="noopener noreferrer">Astro</a>
+					is the centre of gravity now. Content and portfolio sites want real
+					HTML in the first response, clean metadata, and as little JavaScript
+					as you can get away with. Astro delivers that without ceremony:
+					file-based routes, content collections, image pipelines, and a build
+					that stays fast as the site grows.
+				</p>
+				<p>
+					The island model is the part I love. Most of the page is static.
+					When a gallery lightbox, a geometry playground, or a meeting
+					comparator needs interactivity, you mount a small island and leave
+					the rest alone. Ship less JS by default; keep the clever bits
+					where they earn their keep. For SEO and time-to-interactive on a
+					portfolio, that split is hard to beat.
+				</p>
+			</section>
+
+			<section id="react">
+				<h2>React, when it counts</h2>
+				<p>
+					<a href="https://react.dev/" target="_blank" rel="noopener noreferrer">React</a>
+					still wins for rich UI. Hooks made it a joy:
+					<code>useState</code>,
+					<code>useEffect</code>, and custom hooks for logic you
+					want to reuse without inventing a framework. On Astro sites, React
+					shows up as islands —
+					<a href="https://lucidgeometry.com" target="_blank" rel="noopener noreferrer">Lucid Geometry</a>’s
+					3D playground is a good example — not as a full-page SPA tax.
+				</p>
+				<p>
+					For denser apps I still reach for solid component systems.
+					<a href="https://www.heroui.com/" target="_blank" rel="noopener noreferrer">HeroUI</a>
+					gives polished, accessible React components with strong TypeScript
+					support out of the box.
+					<a href="https://ui.shadcn.com/" target="_blank" rel="noopener noreferrer">shadcn/ui</a>
+					is wonderful when you want ownership of the code: copy the
+					components in, restyle with Tailwind, keep full control. Older
+					projects still run happily on
+					<a href="https://chakra-ui.com/" target="_blank" rel="noopener noreferrer">Chakra UI</a>
+					— cohesive tokens, great accessibility, and a theme system that
+					stays coherent as the app grows. I don’t rewrite working software
+					for fashion; Chakra earned its place on those codebases.
+				</p>
+			</section>
+
+			<section id="typescript-tailwind">
+				<h2>TypeScript &amp; Tailwind</h2>
+				<p>
+					<a href="https://www.typescriptlang.org/" target="_blank" rel="noopener noreferrer">TypeScript</a>
+					is non-negotiable for anything that will live longer than a
+					weekend. IntelliSense, safe renames, and compile-time catches make
+					ambitious UIs feel calm. Gradual typing means you can move fast
+					early and tighten types as the design settles — the best of static
+					and dynamic without the drama.
+				</p>
+				<p>
+					<a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer">Tailwind</a>
+					is how most new UI gets styled. Utility classes keep design
+					decisions next to the markup, purge cleanly, and make
+					pixel-sensitive layouts faster than hunting through CSS files. On
+					this site the visual system is Kami: parchment canvas, ink-blue
+					accent, serif hierarchy.
+				</p>
+			</section>
+
+			<section id="3d-data-search">
+				<h2>3D, data &amp; search</h2>
+				<p>
+					When the product is spatial or generative,
+					<a href="https://threejs.org/" target="_blank" rel="noopener noreferrer">Three.js</a>
+					is still the best way to put a real-time canvas in the browser.
+					<a href="https://lucidgeometry.com" target="_blank" rel="noopener noreferrer">Lucid Geometry</a>
+					extends Spirograph into interactive 3D;
+					<a href="https://weatherwombat.com" target="_blank" rel="noopener noreferrer">Weather Wombat</a>
+					uses the same family of tools to make climate history tangible.
+					Heavy historical weather processing on the Wombat side leans on
+					<a href="https://spark.apache.org/" target="_blank" rel="noopener noreferrer">Apache Spark</a>
+					and Scala — the right tools when the dataset is “every station since
+					records began,” not a weekend CSV.
+				</p>
+				<p>
+					Search that feels instant usually means
+					<a href="https://www.algolia.com/" target="_blank" rel="noopener noreferrer">Algolia</a>
+					(or a similar hosted index). Typo tolerance, facets, and ranking you
+					don’t have to reinvent — perfect for news and large document sets
+					where “just <code>grep</code> the static files” stops scaling.
+				</p>
+			</section>
+
+			<section id="ai">
+				<h2>AI in the product</h2>
+				<p>
+					AI shows up where it removes friction, not as decoration. Brand and
+					theme tools use assistants to ideate names, domains, and palettes;
+					news and research surfaces use models to help structure and explore
+					large corpora.
+					<a href="https://www.anthropic.com/" target="_blank" rel="noopener noreferrer">Anthropic Claude</a>
+					has been an excellent partner for those product surfaces — careful
+					defaults, strong instruction following, and APIs that fit cleanly
+					behind a small backend.
+				</p>
+				<p>
+					<a href="https://lucidmusician.com" target="_blank" rel="noopener noreferrer">Lucid Musician</a>
+					goes further: a custom harmony model trained on centuries of
+					composition, with
+					<a href="https://pytorch.org/" target="_blank" rel="noopener noreferrer">PyTorch</a>
+					in the training loop and
+					<a href="https://onnx.ai/" target="_blank" rel="noopener noreferrer">ONNX</a>
+					when you need portable inference. The marketing site is Astro; the
+					interesting bit is the model and the plugin.
+				</p>
+			</section>
+
+			<section id="audio">
+				<h2>Audio plugins</h2>
+				<p>
+					Desktop audio is a different world.
+					<a href="https://juce.com/" target="_blank" rel="noopener noreferrer">JUCE</a>
+					is the serious toolkit for cross-platform plugins — VST, AU, the
+					hosts musicians actually open. The DSP and host integration are
+					first-class. You still pay the
+					<a href="https://isocpp.org/" target="_blank" rel="noopener noreferrer">C++</a>
+					tax for real-time audio, and that’s fine: the alternative is
+					plugins that never load. Where it helps,
+					<a href="https://www.rust-lang.org/" target="_blank" rel="noopener noreferrer">Rust</a>
+					joins the pipeline for safer systems code around the edges of that
+					stack. JUCE is excellent; shipping something a DAW will load is the
+					goal.
+				</p>
+			</section>
+
+			<section id="cloud">
+				<h2>Cloud &amp; infrastructure</h2>
+				<p>
+					<a href="https://aws.amazon.com/" target="_blank" rel="noopener noreferrer">AWS</a>
+					is home base:
+					<a href="https://aws.amazon.com/s3/" target="_blank" rel="noopener noreferrer">S3</a>
+					for static hosting and files,
+					<a href="https://aws.amazon.com/cloudfront/" target="_blank" rel="noopener noreferrer">CloudFront</a>
+					for the CDN,
+					<a href="https://aws.amazon.com/route53/" target="_blank" rel="noopener noreferrer">Route 53</a>
+					for DNS,
+					<a href="https://aws.amazon.com/certificate-manager/" target="_blank" rel="noopener noreferrer">Certificate Manager</a>
+					for TLS,
+					<a href="https://aws.amazon.com/lambda/" target="_blank" rel="noopener noreferrer">Lambda</a>
+					when something needs to run without a server to babysit, and
+					<a href="https://aws.amazon.com/dynamodb/" target="_blank" rel="noopener noreferrer">DynamoDB</a>
+					when a simple, fast data store is enough. A little
+					<a href="https://azure.microsoft.com/" target="_blank" rel="noopener noreferrer">Azure</a>
+					appears where enterprise identity needs it.
+				</p>
+				<p>
+					<a href="https://aws.amazon.com/cdk/" target="_blank" rel="noopener noreferrer">AWS CDK</a>
+					is how infrastructure stays sane. Real language bindings mean type
+					safety, modules, and the same review habits as application code. IAM
+					permissions, DNS, certificates, CloudFront, and S3 deployments live
+					in one stack — domain, cert, CDN, and deploy as a single story.
+					Invalidating the edge when content ships is part of that story, not
+					an afterthought.
+				</p>
+				<p>
+					<a href="https://aws.amazon.com/amplify/" target="_blank" rel="noopener noreferrer">AWS Amplify</a>
+					is still a pleasure when a product needs auth, APIs, and storage
+					without assembling every piece by hand. Under the covers it’s CDK,
+					AppSync, API Gateway, Cognito, DynamoDB — the boring reliable
+					building blocks, wired so you can focus on the product.
+				</p>
+			</section>
+
+			<section id="docs">
+				<h2>Docs &amp; older friends</h2>
+				<p>
+					<a href="https://baremetal.help" target="_blank" rel="noopener noreferrer">Baremetal Help</a>
+					is
+					<a href="https://docusaurus.io/" target="_blank" rel="noopener noreferrer">Docusaurus</a>
+					— still one of the best ways to ship versioned technical docs with
+					search and a structure readers understand. Not every site needs a
+					custom design system; sometimes you want a documentation engine that
+					already solved navigation and MDX.
+				</p>
+				<p>
+					A few long-lived apps still run on
+					<a href="https://www.gatsbyjs.com/" target="_blank" rel="noopener noreferrer">Gatsby</a>
+					and Chakra —
+					<a href="https://brandboffin.com" target="_blank" rel="noopener noreferrer">Brand Boffin</a>,
+					<a href="https://chakrathemes.com" target="_blank" rel="noopener noreferrer">Chakra Themes</a>,
+					<a href="https://retire.guru" target="_blank" rel="noopener noreferrer">Retire Guru</a>
+					among them. Gatsby taught a generation of React sites how to be
+					fast and SEO-friendly; those codebases still work. New greenfield
+					work prefers Astro for lighter defaults, and I migrate as I touch
+					things — without scorning the tools that already serve people well.
+				</p>
+			</section>
+
+			<section id="build">
+				<h2>Build tooling</h2>
+				<p>
+					<a href="https://vite.dev/" target="_blank" rel="noopener noreferrer">Vite</a>
+					made front-end builds feel modern again: native ES modules in dev,
+					reliable HMR, and production builds measured in a breath rather than
+					a coffee break. Astro sits on that ecosystem; standalone React apps
+					use it directly. Either way, the feedback loop stays tight enough
+					that design exploration stays fun.
+				</p>
+			</section>
+
+			<section id="principles">
+				<h2>Principles</h2>
+				<p>
+					Prefer static where static is enough. Add a runtime only when the
+					interaction needs it. Keep infrastructure in code next to the app.
+					Use AI to remove drudgery, not to obscure the product. Choose boring
+					cloud pieces that scale quietly. And leave room for craft —
+					photography sites, furniture galleries, and music tools deserve the
+					same engineering care as the “serious” apps.
+				</p>
+				<p>
+					If you want the human side of this story, it’s on the
+					<a href="/about">about</a>
+					page. If you want to see the output, the homepage portfolios are the
+					demo.
+				</p>
+			</section>
+
+			<nav class="pager" aria-label="Pager">
+				<a href="/about">
+					<span class="label">Previous</span>
+					About
+				</a>
+				<a class="next" href="/">
+					<span class="label">Next</span>
+					Home
+				</a>
+			</nav>
+		</article>
+	</div>
+</Layout>
