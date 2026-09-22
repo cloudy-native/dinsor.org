@@ -9,12 +9,23 @@ const { content } = ir;
 const title = "Dinsor · Art and science share a bench";
 const description =
 	"Studio of Dinsor (Stephen Harrison) in Bangkok. Photography, furniture, and open source tools.";
+const [enName, thName] = content.product_name.split(" / ");
 ---
 
 <Layout title={title} description={description}>
 	<header class="hero">
 		<Navbar />
-		<h1>{content.product_name}</h1>
+		<h1>
+			{thName ? (
+				<>
+					<span class="hero-en">{enName}</span>
+					<span class="hero-slash"> / </span>
+					<span class="hero-th">{thName}</span>
+				</>
+			) : (
+				content.product_name
+			)}
+		</h1>
 		<p class="tagline">{content.tagline}</p>
 		<div class="hero-tokens">
 			<span>Open source</span>
@@ -33,11 +44,15 @@ const description =
 			<div class="gallery-frame" aria-live="polite">
 				{
 					galleryPortfolios.map((portfolio, i) => (
-						<figure
+						<a
 							class:list={["gallery-panel", i === 0 && "is-active"]}
+							href={portfolio.url}
+							target="_blank"
+							rel="noopener noreferrer"
 							data-title={portfolio.title}
 							data-line={portfolio.galleryCaption}
 							aria-hidden={i === 0 ? "false" : "true"}
+							tabindex={i === 0 ? undefined : -1}
 						>
 							<img
 								src={portfolio.image}
@@ -45,7 +60,7 @@ const description =
 								loading={i === 0 ? "eager" : "lazy"}
 								decoding="async"
 							/>
-						</figure>
+						</a>
 					))
 				}
 			</div>
@@ -72,7 +87,7 @@ const description =
 	<section id="works">
 		<div class="section-head">
 			<p class="section-num">01 · Selected works</p>
-			<h2 class="section-title">The rest of the bench</h2>
+			<h2 class="section-title">The full bench</h2>
 			<p class="section-lede">Every public site, in one grid.</p>
 		</div>
 		<div class="demo-grid">
@@ -146,7 +161,6 @@ const description =
 	(function () {
 		const gallery = document.querySelector("[data-gallery]");
 		if (!gallery) return;
-		const frame = gallery.querySelector(".gallery-frame");
 		const panels = Array.prototype.slice.call(
 			gallery.querySelectorAll(".gallery-panel"),
 		);
@@ -203,6 +217,8 @@ const description =
 				const active = i === index;
 				p.classList.toggle("is-active", active);
 				p.setAttribute("aria-hidden", active ? "false" : "true");
+				if (active) p.removeAttribute("tabindex");
+				else p.setAttribute("tabindex", "-1");
 			});
 			tabs.forEach(function (t, i) {
 				const active = i === index;
@@ -232,18 +248,6 @@ const description =
 				start();
 			});
 		});
-		if (frame) {
-			frame.addEventListener("click", function (e) {
-				const box = frame.getBoundingClientRect();
-				const next =
-					(e as MouseEvent).clientX < box.left + box.width / 2
-						? (index - 1 + panels.length) % panels.length
-						: (index + 1) % panels.length;
-				stop();
-				activate(next);
-				start();
-			});
-		}
 		gallery.addEventListener("mouseenter", stop);
 		gallery.addEventListener("mouseleave", start);
 		gallery.addEventListener("focusin", stop);

@@ -35,6 +35,13 @@ export const portfolios: Portfolio[] = [
 		galleryCaption: "Wood and epoxy, by hand.",
 	},
 	{
+		title: "Dinsor Design",
+		url: "https://github.com/cloudy-native/dinsor-design/blob/main/README.md",
+		description:
+			"Warm paper, one green. Pages that read like a typeset document, then work like a site.",
+		image: "/images/dinsor-design.png",
+	},
+	{
 		title: "Lucid Musician",
 		url: "https://lucidmusician.com",
 		description:

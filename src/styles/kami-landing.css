@@ -20,10 +20,11 @@
 
   --serif: Charter, Georgia, Palatino,
            "Times New Roman", serif;
-  --sans:  var(--serif);
+  --sans:  "Avenir Next", Avenir, "Helvetica Neue",
+           Helvetica, sans-serif;
   --mono:  "JetBrains Mono", "Fira Code", "SF Mono",
            Consolas, Monaco, monospace;
-  --latin-ui: system-ui, -apple-system, "Segoe UI", sans-serif;
+  --latin-ui: var(--sans);
 
   --shot-bg: #141318;
 }
@@ -31,10 +32,14 @@
 * { box-sizing: border-box; }
 html, body { margin: 0; padding: 0; }
 
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+}
+
 body {
   background: var(--parchment);
   color: var(--near-black);
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 15px;
   line-height: 1.55;
   letter-spacing: 0;
@@ -64,7 +69,7 @@ a:hover { color: var(--brand-light); }
   gap: 8px;
   background: var(--brand);
   color: var(--ivory);
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-weight: 500;
   font-size: 15px;
   letter-spacing: 0.2px;
@@ -87,7 +92,7 @@ a:hover { color: var(--brand-light); }
   align-items: center;
   justify-content: center;
   gap: 6px;
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-weight: 500;
   font-size: 15px;
   color: var(--brand);
@@ -150,6 +155,8 @@ a:hover { color: var(--brand-light); }
   line-height: 1.05;
   letter-spacing: 0;
   margin: 0 0 18px;
+  max-width: 100%;
+  overflow-wrap: break-word;
   color: var(--near-black);
   opacity: 0;
   transform: translateY(10px);
@@ -161,7 +168,7 @@ a:hover { color: var(--brand-light); }
 }
 
 .hero .tagline {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-weight: 400;
   font-size: 21px;
   line-height: 1.4;
@@ -219,7 +226,7 @@ section { margin-bottom: 72px; }
   letter-spacing: 0;
 }
 .section-lede {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-weight: 400;
   font-size: 17px;
   line-height: 1.55;
@@ -227,7 +234,7 @@ section { margin-bottom: 72px; }
   margin: 14px 0 0;
 }
 .section-versus {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 14px;
   color: var(--stone);
   margin: 14px 0 0;
@@ -272,7 +279,7 @@ section { margin-bottom: 72px; }
   border-radius: 8px;
   overflow: hidden;
   box-shadow: 0 1px 3px rgba(20, 19, 19, 0.10);
-  cursor: ew-resize;
+  cursor: pointer;
 }
 .gallery-frame::after {
   content: "";
@@ -356,7 +363,7 @@ section { margin-bottom: 72px; }
   flex: 0 0 auto;
 }
 .gallery-caption .line {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 14px;
   color: var(--olive);
   font-style: italic;
@@ -422,7 +429,7 @@ section { margin-bottom: 72px; }
 .features .name small {
   display: block;
   margin-top: 4px;
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 13px;
   color: var(--olive);
   font-weight: 400;
@@ -431,7 +438,7 @@ section { margin-bottom: 72px; }
   letter-spacing: 0;
 }
 .features .what {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 15px;
   line-height: 1.55;
   color: var(--dark-warm);
@@ -493,7 +500,7 @@ section { margin-bottom: 72px; }
 /* ========== Manifesto (brand philosophy paragraph) ========== */
 
 .manifesto {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 20px;
   line-height: 1.55;
   letter-spacing: 0.05em;
@@ -609,7 +616,7 @@ pre.code .k { color: var(--brand); }
   padding: 0;
 }
 .price-benefits li {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 16px;
   color: var(--dark-warm);
   line-height: 1.55;
@@ -626,7 +633,7 @@ pre.code .k { color: var(--brand); }
   font-variant-numeric: lining-nums tabular-nums;
 }
 .price-vs {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 18px;
   color: var(--dark-warm);
   margin: 0 0 40px;
@@ -650,7 +657,7 @@ pre.code .k { color: var(--brand); }
   justify-content: center;
 }
 .price-trial {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 14px;
   color: var(--stone);
   margin: 16px 0 0;
@@ -663,7 +670,7 @@ pre.code .k { color: var(--brand); }
 }
 .price-trial a:hover { color: var(--brand-light); }
 .price-terms {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 13.5px;
   color: var(--olive);
   margin: 28px 0 0;
@@ -689,7 +696,7 @@ pre.code .k { color: var(--brand); }
   letter-spacing: 0.1px;
 }
 .faq dd {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 14px;
   line-height: 1.55;
   color: var(--olive);
@@ -704,7 +711,7 @@ pre.code .k { color: var(--brand); }
   border-radius: 3px;
 }
 .faq-tail {
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 13px;
   color: var(--stone);
   margin: 28px 0 0;
@@ -721,7 +728,7 @@ footer.foot {
   justify-content: space-between;
   align-items: flex-end;
   gap: 48px;
-  font-family: var(--serif);
+  font-family: var(--sans);
   font-size: 13px;
   color: var(--stone);
 }
@@ -790,7 +797,7 @@ footer.foot {
 @media (max-width: 880px) {
   .page { padding: 64px 32px 80px; }
   .hero { margin-bottom: 56px; padding-bottom: 32px; }
-  .hero h1 { font-size: 64px; letter-spacing: 0; }
+  .hero h1 { font-size: 56px; letter-spacing: 0; }
   .hero .tagline { font-size: 18px; }
 
   section { margin-bottom: 56px; }
@@ -834,7 +841,7 @@ footer.foot {
 
 @media (max-width: 480px) {
   .page { padding: 48px 16px 72px; }
-  .hero h1 { font-size: 56px; }
+  .hero h1 { font-size: 36px; }
   .hero .tagline { font-size: 17px; }
   .eyebrow {
     flex-direction: column;
