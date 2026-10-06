@@ -105,12 +105,18 @@ export class DinsorOrgStack extends Stack {
 			},
 		});
 
-		// Deploy website files and invalidate CloudFront cache
+		// Deploy website files and invalidate CloudFront cache.
+		// The default 128MB handler runs the AWS CLI and can run out of memory.
+		// Waiting for the invalidation keeps the Lambda alive until CloudFront
+		// finishes, which can exceed its 15 minute limit while the distribution
+		// is also being updated, so the invalidation is started but not awaited.
 		new BucketDeployment(this, "WebsiteDeployment", {
 			sources: [Source.asset("../dist")],
 			destinationBucket: websiteBucket,
 			distribution: websiteDistribution,
 			distributionPaths: ["/*"],
+			waitForDistributionInvalidation: false,
+			memoryLimit: 1024,
 		});
 
 		// Create DNS records for website
