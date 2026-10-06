@@ -1,4 +1,4 @@
-#!/opt/homebrew/opt/node/bin/node
+#!/usr/bin/env node
 import { App } from "aws-cdk-lib";
 import { DinsorOrgStack } from "../lib/dinsor.org-stack";
 
@@ -16,7 +16,9 @@ new DinsorOrgStack(app, "DinsorOrgStack", {
   domainName,
   env: {
     account: process.env.CDK_DEFAULT_ACCOUNT,
-    region: process.env.CDK_DEFAULT_REGION,
+    // CloudFront only accepts ACM certificates from us-east-1, and the whole
+    // stack (certificate included) lives in one region.
+    region: "us-east-1",
   },
   tags,
   description: "dinsor.org",
