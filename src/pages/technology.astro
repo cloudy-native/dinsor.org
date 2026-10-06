@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Navbar from "../components/Navbar.astro";
 
 const title = "Technology | Dinsor";
 const description =
@@ -22,7 +21,6 @@ const toc = [
 ---
 
 <Layout title={title} description={description}>
-	<Navbar />
 	<div class="docs">
 		<article class="docs-prose">
 			<h1>Technology</h1>
@@ -128,9 +126,11 @@ const toc = [
 					<a href="https://tailwindcss.com/" target="_blank" rel="noopener noreferrer">Tailwind</a>
 					is how most new UI gets styled. Utility classes keep design
 					decisions next to the markup, purge cleanly, and make
-					pixel-sensitive layouts faster than hunting through CSS files. On
-					this site the visual system is Kami: parchment canvas, ink-blue
-					accent, serif headings.
+					pixel-sensitive layouts faster than hunting through CSS files. This
+					site is the exception: plain CSS on top of
+					<a href="https://github.com/cloudy-native/dinsor-design" target="_blank" rel="noopener noreferrer">dinsor-design</a>,
+					my own design system of warm paper, one ink-green accent, and
+					serif headings.
 				</p>
 			</section>
 

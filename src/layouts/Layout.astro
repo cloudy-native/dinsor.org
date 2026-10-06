@@ -1,6 +1,10 @@
 ---
-import '../styles/globals.css';
-import ChatModal from '../components/ChatModal.astro';
+import { Image, getImage } from "astro:assets";
+import "dinsor-design/dist/dinsor.css";
+import "../styles/site.css";
+import ChatModal from "../components/ChatModal.astro";
+import Navbar from "../components/Navbar.astro";
+import portrait from "../assets/images/dinsor.jpg";
 
 interface Props {
 	title?: string;
@@ -13,7 +17,8 @@ const {
 } = Astro.props;
 
 const canonical = new URL(Astro.url.pathname, Astro.site ?? "https://dinsor.org").href;
-const ogImage = new URL("/images/dinsor.jpg", Astro.site ?? "https://dinsor.org").href;
+const og = await getImage({ src: portrait, width: 1200, height: 630, fit: "cover", format: "jpeg" });
+const ogImage = new URL(og.src, Astro.site ?? "https://dinsor.org").href;
 ---
 
 <!doctype html>
@@ -56,11 +61,15 @@ const ogImage = new URL("/images/dinsor.jpg", Astro.site ?? "https://dinsor.org"
 		})} />
 	</head>
 	<body>
-		<main class="page">
+		<a class="skip" href="#content">Skip to content</a>
+		<Navbar />
+		<main id="content" class="inner">
 			<slot />
-			<footer class="foot">
+		</main>
+		<footer class="inner site-footer">
+			<div class="foot">
 				<div class="mark">
-					<img src="/images/dinsor.jpg" alt="Dinsor" />
+					<Image src={portrait} alt="Dinsor" width={112} height={112} fit="cover" format="webp" />
 					<span class="wm-name">Dinsor</span>
 					<span class="wm-line">Stephen Harrison · Bangkok</span>
 				</div>
@@ -74,8 +83,8 @@ const ogImage = new URL("/images/dinsor.jpg", Astro.site ?? "https://dinsor.org"
 					</div>
 					<p class="ethos">A pencil is for ideas on the go.</p>
 				</div>
-			</footer>
-		</main>
+			</div>
+		</footer>
 		<ChatModal />
 	</body>
 </html>

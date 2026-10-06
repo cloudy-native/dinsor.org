@@ -1,6 +1,6 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Navbar from "../components/Navbar.astro";
+import { Image } from "astro:assets";
 import PortfolioCard from "../components/PortfolioCard.astro";
 import { galleryPortfolios, portfolios } from "../data/portfolios";
 import ir from "../../content.json";
@@ -13,9 +13,9 @@ const [enName, thName] = content.product_name.split(" / ");
 ---
 
 <Layout title={title} description={description}>
-	<header class="hero">
-		<Navbar />
-		<h1>
+	<section class="section hero" aria-labelledby="page-title">
+		<p class="overline">Studio · Bangkok</p>
+		<h1 id="page-title" class="display">
 			{thName ? (
 				<>
 					<span class="hero-en">{enName}</span>
@@ -26,19 +26,19 @@ const [enName, thName] = content.product_name.split(" / ");
 				content.product_name
 			)}
 		</h1>
-		<p class="tagline">{content.tagline}</p>
-		<div class="hero-tokens">
-			<span>Open source</span>
-			<span>Hand-built</span>
-			<span>Free to use</span>
+		<p class="lede">{content.tagline}</p>
+		<div class="row">
+			<span class="tag quiet">Open source</span>
+			<span class="tag quiet">Hand-built</span>
+			<span class="tag quiet">Free to use</span>
 		</div>
-	</header>
+	</section>
 
-	<section>
+	<section class="section" aria-labelledby="see-title">
 		<div class="section-head">
-			<p class="section-num">00 · See it</p>
-			<h2 class="section-title">Shipped sites</h2>
-			<p class="section-lede">Real screens. Four of them, rotating.</p>
+			<p class="overline">00 · See it</p>
+			<h2 id="see-title">Shipped sites</h2>
+			<p class="lede">Real screens. Four of them.</p>
 		</div>
 		<div class="gallery" data-gallery>
 			<div class="gallery-frame" aria-live="polite">
@@ -54,11 +54,17 @@ const [enName, thName] = content.product_name.split(" / ");
 							aria-hidden={i === 0 ? "false" : "true"}
 							tabindex={i === 0 ? undefined : -1}
 						>
-							<img
+							<Image
 								src={portfolio.image}
 								alt={portfolio.title}
+								width={1040}
+								height={650}
+								widths={[640, 1040, 1560]}
+								sizes="(min-width: 1104px) 1040px, calc(100vw - 40px)"
+								fit="cover"
+								position="top"
+								format="webp"
 								loading={i === 0 ? "eager" : "lazy"}
-								decoding="async"
 							/>
 						</a>
 					))
@@ -73,7 +79,7 @@ const [enName, thName] = content.product_name.split(" / ");
 					galleryPortfolios.map((portfolio, i) => (
 						<button
 							type="button"
-							class:list={[i === 0 && "is-active"]}
+							class:list={["btn", i === 0 && "is-active"]}
 							aria-pressed={i === 0 ? "true" : "false"}
 						>
 							{portfolio.title}
@@ -84,21 +90,21 @@ const [enName, thName] = content.product_name.split(" / ");
 		</div>
 	</section>
 
-	<section id="works">
+	<section class="section" id="works" aria-labelledby="works-title">
 		<div class="section-head">
-			<p class="section-num">01 · Selected works</p>
-			<h2 class="section-title">The full bench</h2>
-			<p class="section-lede">Every public site, in one grid.</p>
+			<p class="overline">01 · Selected works</p>
+			<h2 id="works-title">The full bench</h2>
+			<p class="lede">Every public site, in one grid.</p>
 		</div>
 		<div class="demo-grid">
 			{portfolios.map((portfolio) => <PortfolioCard portfolio={portfolio} />)}
 		</div>
 	</section>
 
-	<section>
+	<section class="section" aria-labelledby="s02-title">
 		<div class="section-head">
-			<p class="section-num">02 · Practice</p>
-			<h2 class="section-title">What the work is</h2>
+			<p class="overline">02 · Practice</p>
+			<h2 id="s02-title">What the work is</h2>
 		</div>
 		<ol class="features">
 			{
@@ -115,10 +121,10 @@ const [enName, thName] = content.product_name.split(" / ");
 		</ol>
 	</section>
 
-	<section>
+	<section class="section" aria-labelledby="s03-title">
 		<div class="section-head">
-			<p class="section-num">03 · Principles</p>
-			<h2 class="section-title">How it gets built</h2>
+			<p class="overline">03 · Principles</p>
+			<h2 id="s03-title">How it gets built</h2>
 		</div>
 		<ol class="principles">
 			{
@@ -135,10 +141,10 @@ const [enName, thName] = content.product_name.split(" / ");
 		</ol>
 	</section>
 
-	<section>
+	<section class="section" aria-labelledby="s04-title">
 		<div class="section-head">
-			<p class="section-num">04 · Questions</p>
-			<h2 class="section-title">A few answers</h2>
+			<p class="overline">04 · Questions</p>
+			<h2 id="s04-title">A few answers</h2>
 		</div>
 		<dl class="faq">
 			{
@@ -158,100 +164,32 @@ const [enName, thName] = content.product_name.split(" / ");
 </Layout>
 
 <script>
-	(function () {
-		const gallery = document.querySelector("[data-gallery]");
-		if (!gallery) return;
-		const panels = Array.prototype.slice.call(
-			gallery.querySelectorAll(".gallery-panel"),
-		);
-		const tabs = Array.prototype.slice.call(
-			gallery.querySelectorAll(".gallery-tabs button"),
-		);
+	const gallery = document.querySelector<HTMLElement>("[data-gallery]");
+
+	if (gallery) {
+		const panels = Array.from(gallery.querySelectorAll<HTMLElement>(".gallery-panel"));
+		const tabs = Array.from(gallery.querySelectorAll<HTMLButtonElement>(".gallery-tabs button"));
 		const title = gallery.querySelector("[data-gallery-title]");
 		const line = gallery.querySelector("[data-gallery-line]");
-		let index = 0;
-		let timer: number | null = null;
-		let transitionTimer: number | null = null;
-		const reduceMotion = window.matchMedia(
-			"(prefers-reduced-motion: reduce)",
-		).matches;
 
-		if (panels.length === 0) return;
-		if (panels.length === 1) {
-			panels[0].classList.add("is-active");
-			panels[0].setAttribute("aria-hidden", "false");
-			if (title) title.textContent = panels[0].dataset.title || "";
-			if (line) line.textContent = panels[0].dataset.line || "";
-			tabs.forEach(function (t) {
-				t.classList.add("is-active");
-				t.setAttribute("aria-pressed", "true");
-			});
-			return;
-		}
-
-		if (panels.length > 0 && title) {
-			title.textContent = panels[0].dataset.title || "";
-			if (line) line.textContent = panels[0].dataset.line || "";
-		}
-
-		function activate(next: number) {
-			if (next === index) return;
-			const previous = index;
-			const direction = (next - previous + panels.length) % panels.length;
-			(gallery as HTMLElement).dataset.direction =
-				direction > panels.length / 2 ? "prev" : "next";
-			if (transitionTimer) window.clearTimeout(transitionTimer);
-			panels.forEach(function (p) {
-				p.classList.remove("was-active");
-			});
-			const outgoing = panels[previous];
-			if (outgoing) outgoing.classList.add("was-active");
-			gallery.classList.add("is-switching");
-			transitionTimer = window.setTimeout(function () {
-				gallery.classList.remove("is-switching");
-				if (outgoing) outgoing.classList.remove("was-active");
-				transitionTimer = null;
-			}, 920);
-			index = next;
-			panels.forEach(function (p, i) {
+		function show(index: number) {
+			panels.forEach((panel, i) => {
 				const active = i === index;
-				p.classList.toggle("is-active", active);
-				p.setAttribute("aria-hidden", active ? "false" : "true");
-				if (active) p.removeAttribute("tabindex");
-				else p.setAttribute("tabindex", "-1");
+				panel.classList.toggle("is-active", active);
+				panel.setAttribute("aria-hidden", active ? "false" : "true");
+				if (active) panel.removeAttribute("tabindex");
+				else panel.setAttribute("tabindex", "-1");
 			});
-			tabs.forEach(function (t, i) {
+			tabs.forEach((tab, i) => {
 				const active = i === index;
-				t.classList.toggle("is-active", active);
-				t.setAttribute("aria-pressed", active ? "true" : "false");
+				tab.classList.toggle("is-active", active);
+				tab.setAttribute("aria-pressed", active ? "true" : "false");
 			});
-			if (title) title.textContent = panels[index].dataset.title || "";
-			if (line) line.textContent = panels[index].dataset.line || "";
+			if (title) title.textContent = panels[index]?.dataset.title ?? "";
+			if (line) line.textContent = panels[index]?.dataset.line ?? "";
 		}
 
-		function start() {
-			if (reduceMotion || timer) return;
-			timer = window.setInterval(function () {
-				activate((index + 1) % panels.length);
-			}, 4500);
-		}
-		function stop() {
-			if (!timer) return;
-			window.clearInterval(timer);
-			timer = null;
-		}
-
-		tabs.forEach(function (tab, i) {
-			tab.addEventListener("click", function () {
-				stop();
-				activate(i);
-				start();
-			});
-		});
-		gallery.addEventListener("mouseenter", stop);
-		gallery.addEventListener("mouseleave", start);
-		gallery.addEventListener("focusin", stop);
-		gallery.addEventListener("focusout", start);
-		start();
-	})();
+		tabs.forEach((tab, i) => tab.addEventListener("click", () => show(i)));
+		show(0);
+	}
 </script>

@@ -1,0 +1,20 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const title = "Not found | Dinsor";
+const description = "This page does not exist.";
+---
+
+<Layout title={title} description={description}>
+	<div class="docs">
+		<article class="docs-prose">
+			<h1>Page not found</h1>
+			<p class="lede">
+				There is nothing at this address. Try the
+				<a href="/">home page</a>,
+				<a href="/about">About</a>, or
+				<a href="/technology">Technology</a>.
+			</p>
+		</article>
+	</div>
+</Layout>

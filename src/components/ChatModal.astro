@@ -1,4 +1,15 @@
-<div id="chat-modal" class="chat-modal">
+---
+import { Image, getImage } from "astro:assets";
+import lineApp from "../assets/images/lineapp.png";
+import whatsapp from "../assets/images/whatsapp.png";
+
+const qr = {
+	whatsapp: { name: "WhatsApp", src: (await getImage({ src: whatsapp, width: 520, format: "png" })).src },
+	line: { name: "LINE", src: (await getImage({ src: lineApp, width: 520, format: "png" })).src },
+};
+---
+
+<div id="chat-modal" class="chat-modal" data-qr={JSON.stringify(qr)}>
 	<div id="chat-backdrop" class="chat-backdrop"></div>
 	<div class="chat-card">
 		<div id="chat-options" class="chat-options">
@@ -8,12 +19,12 @@
 			</div>
 			<div class="chat-apps">
 				<button type="button" class="chat-app" data-app="line">
-					<img src="/images/lineapp.png" alt="" />
+					<Image src={lineApp} alt="" width={80} height={80} format="png" />
 					<span class="name">LINE</span>
 					<span class="hint">Show QR code</span>
 				</button>
 				<button type="button" class="chat-app" data-app="whatsapp">
-					<img src="/images/whatsapp.png" alt="" />
+					<Image src={whatsapp} alt="" width={80} height={80} format="png" />
 					<span class="name">WhatsApp</span>
 					<span class="hint">Show QR code</span>
 				</button>
@@ -57,10 +68,9 @@
 	];
 	const backBtn = document.getElementById("qr-back");
 
-	const qrData: Record<string, { name: string; src: string }> = {
-		whatsapp: { name: "WhatsApp", src: "/images/whatsapp.png" },
-		line: { name: "LINE", src: "/images/lineapp.png" },
-	};
+	const qrData: Record<string, { name: string; src: string }> = JSON.parse(
+		modal?.dataset.qr ?? "{}",
+	);
 
 	function showModal() {
 		if (!modal) return;

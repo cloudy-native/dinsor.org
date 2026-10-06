@@ -1,4 +1,4 @@
-import { CfnOutput, RemovalPolicy, Stack, type StackProps } from "aws-cdk-lib";
+import { CfnOutput, Duration, RemovalPolicy, Stack, type StackProps } from "aws-cdk-lib";
 import {
 	Certificate,
 	CertificateValidation,
@@ -6,6 +6,9 @@ import {
 import {
 	CachePolicy,
 	Distribution,
+	HeadersFrameOption,
+	HeadersReferrerPolicy,
+	ResponseHeadersPolicy,
 	ViewerProtocolPolicy,
 } from "aws-cdk-lib/aws-cloudfront";
 import { S3StaticWebsiteOrigin } from "aws-cdk-lib/aws-cloudfront-origins";
@@ -19,39 +22,86 @@ export interface DinsorOrgStackProps extends StackProps {
 	domainName: string;
 }
 
+// Scripts and styles are external files (see astro.config.mjs), so no
+// 'unsafe-inline' is needed. JSON-LD blocks are data, not executed.
+const CONTENT_SECURITY_POLICY = [
+	"default-src 'self'",
+	"img-src 'self' data:",
+	"object-src 'none'",
+	"base-uri 'self'",
+	"form-action 'self'",
+	"frame-ancestors 'none'",
+].join("; ");
+
 export class DinsorOrgStack extends Stack {
 	constructor(scope: Construct, id: string, props: DinsorOrgStackProps) {
 		super(scope, id, props);
 
 		const { domainName } = props;
+		const wwwDomainName = `www.${domainName}`;
 
-		// Create S3 bucket for website hosting
+		// S3 website hosting serves index.html for /about/ and 404.html for
+		// missing pages. The site is public and rebuilt from source, so
+		// teardown may delete the contents.
 		const websiteBucket = new Bucket(this, "WebsiteBucket", {
 			websiteIndexDocument: "index.html",
 			websiteErrorDocument: "404.html",
 			publicReadAccess: true,
 			blockPublicAccess: BlockPublicAccess.BLOCK_ACLS_ONLY,
 			removalPolicy: RemovalPolicy.DESTROY,
+			autoDeleteObjects: true,
 		});
 
 		const hostedZone = HostedZone.fromLookup(this, "HostedZone", {
 			domainName,
 		});
 
-		// Create single SSL certificate for all domains
+		// Create single SSL certificate for apex and www
 		const certificate = new Certificate(this, "Certificate", {
 			domainName,
+			subjectAlternativeNames: [wwwDomainName],
 			validation: CertificateValidation.fromDns(hostedZone),
+		});
+
+		const securityHeaders = new ResponseHeadersPolicy(this, "SecurityHeaders", {
+			securityHeadersBehavior: {
+				strictTransportSecurity: {
+					accessControlMaxAge: Duration.days(365),
+					includeSubdomains: false,
+					preload: false,
+					override: true,
+				},
+				contentTypeOptions: { override: true },
+				frameOptions: { frameOption: HeadersFrameOption.DENY, override: true },
+				referrerPolicy: {
+					referrerPolicy: HeadersReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN,
+					override: true,
+				},
+				contentSecurityPolicy: {
+					contentSecurityPolicy: CONTENT_SECURITY_POLICY,
+					override: true,
+				},
+			},
+			customHeadersBehavior: {
+				customHeaders: [
+					{
+						header: "Permissions-Policy",
+						value: "camera=(), microphone=(), geolocation=()",
+						override: true,
+					},
+				],
+			},
 		});
 
 		// Create CloudFront distribution for website
 		const websiteDistribution = new Distribution(this, "WebsiteDistribution", {
 			certificate: certificate,
-			domainNames: [domainName],
+			domainNames: [domainName, wwwDomainName],
 			defaultBehavior: {
 				origin: new S3StaticWebsiteOrigin(websiteBucket),
 				viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
 				cachePolicy: CachePolicy.CACHING_OPTIMIZED,
+				responseHeadersPolicy: securityHeaders,
 			},
 		});
 
@@ -72,7 +122,7 @@ export class DinsorOrgStack extends Stack {
 
 		new ARecord(this, "WwwARecord", {
 			zone: hostedZone,
-			recordName: `www.${domainName}`,
+			recordName: wwwDomainName,
 			target: RecordTarget.fromAlias(new CloudFrontTarget(websiteDistribution)),
 		});
 

@@ -9,13 +9,17 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "lint": "bun node_modules/dinsor-design/scripts/lint.mjs src/styles"
   },
   "dependencies": {
     "@astrojs/sitemap": "^3.7.3",
-    "@tailwindcss/vite": "^4.1.11",
     "astro": "^7.1.4",
-    "tailwindcss": "^4.1.11"
+    "dinsor-design": "github:cloudy-native/dinsor-design#773129aa23affe48cf7a5c4c4bfd3a8dbfed4a6b",
+    "sharp": "^0.35.5"
   },
-  "workspaces": ["cdk"]
+  "workspaces": [
+    "cdk"
+  ],
+  "packageManager": "bun@1.4.2"
 }
