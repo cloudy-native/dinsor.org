@@ -1,5 +1,5 @@
 {
-  "app": "npx ts-node --prefer-ts-exts bin/dinsor.org.ts",
+  "app": "bun bin/dinsor.org.ts",
   "watch": {
     "include": ["**"],
     "exclude": [
@@ -9,7 +9,7 @@
       "**/*.js",
       "tsconfig.json",
       "package*.json",
-      "yarn.lock",
+      "bun.lock",
       "node_modules",
       "test"
     ]

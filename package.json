@@ -15,5 +15,8 @@
     "@astrojs/sitemap": "^3.7.3",
     "astro": "^7.1.4"
   },
-  "workspaces": ["cdk"]
+  "workspaces": [
+    "cdk"
+  ],
+  "packageManager": "bun@1.4.2"
 }

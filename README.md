@@ -5,14 +5,14 @@ Personal portfolio of Dinsor (Stephen Harrison).
 ## Development
 
 ```bash
-pnpm install
-pnpm dev
+bun install
+bun run dev
 ```
 
 ## Build
 
 ```bash
-pnpm build
+bun run build
 ```
 
 This is a clean Astro site with plain CSS. No frameworks, no shims.

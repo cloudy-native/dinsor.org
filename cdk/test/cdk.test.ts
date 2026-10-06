@@ -1,3 +1,4 @@
+import { describe, expect, test } from "bun:test";
 import { App } from "aws-cdk-lib";
 import { Match, Template } from "aws-cdk-lib/assertions";
 import { DinsorOrgStack } from "../lib/dinsor.org-stack";
