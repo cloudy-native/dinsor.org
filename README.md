@@ -15,4 +15,4 @@ pnpm dev
 pnpm build
 ```
 
-This is a clean Astro + Tailwind site. No frameworks, no shims.
+This is a clean Astro site with plain CSS. No frameworks, no shims.

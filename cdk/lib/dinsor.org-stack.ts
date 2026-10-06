@@ -38,16 +38,19 @@ export class DinsorOrgStack extends Stack {
 			domainName,
 		});
 
-		// Create single SSL certificate for all domains
+		const wwwDomainName = `www.${domainName}`;
+
+		// Create single SSL certificate for apex and www
 		const certificate = new Certificate(this, "Certificate", {
 			domainName,
+			subjectAlternativeNames: [wwwDomainName],
 			validation: CertificateValidation.fromDns(hostedZone),
 		});
 
 		// Create CloudFront distribution for website
 		const websiteDistribution = new Distribution(this, "WebsiteDistribution", {
 			certificate: certificate,
-			domainNames: [domainName],
+			domainNames: [domainName, wwwDomainName],
 			defaultBehavior: {
 				origin: new S3StaticWebsiteOrigin(websiteBucket),
 				viewerProtocolPolicy: ViewerProtocolPolicy.REDIRECT_TO_HTTPS,
@@ -72,7 +75,7 @@ export class DinsorOrgStack extends Stack {
 
 		new ARecord(this, "WwwARecord", {
 			zone: hostedZone,
-			recordName: `www.${domainName}`,
+			recordName: wwwDomainName,
 			target: RecordTarget.fromAlias(new CloudFrontTarget(websiteDistribution)),
 		});
 
