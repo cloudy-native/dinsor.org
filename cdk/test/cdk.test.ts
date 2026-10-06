@@ -22,28 +22,15 @@ function synth(): Template {
 describe("DinsorOrgStack", () => {
 	const template = synth();
 
-	test("bucket is private and removable", () => {
+	test("bucket serves the site with index and 404 documents", () => {
 		template.hasResourceProperties("AWS::S3::Bucket", {
-			PublicAccessBlockConfiguration: {
-				BlockPublicAcls: true,
-				BlockPublicPolicy: true,
-				IgnorePublicAcls: true,
-				RestrictPublicBuckets: true,
-			},
+			WebsiteConfiguration: { IndexDocument: "index.html", ErrorDocument: "404.html" },
 		});
+	});
+
+	test("teardown empties and deletes the bucket", () => {
 		template.resourceCountIs("Custom::S3AutoDeleteObjects", 1);
 		template.hasResource("AWS::S3::Bucket", { DeletionPolicy: "Delete" });
-	});
-
-	test("bucket has no website hosting", () => {
-		const buckets = template.findResources("AWS::S3::Bucket");
-		for (const bucket of Object.values(buckets)) {
-			expect(bucket.Properties.WebsiteConfiguration).toBeUndefined();
-		}
-	});
-
-	test("CloudFront reads the bucket through origin access control", () => {
-		template.resourceCountIs("AWS::CloudFront::OriginAccessControl", 1);
 	});
 
 	test("certificate and distribution cover apex and www", () => {
@@ -71,23 +58,6 @@ describe("DinsorOrgStack", () => {
 					}),
 				}),
 			}),
-		});
-	});
-
-	test("missing pages return the 404 page", () => {
-		template.hasResourceProperties("AWS::CloudFront::Distribution", {
-			DistributionConfig: Match.objectLike({
-				CustomErrorResponses: Match.arrayWith([
-					Match.objectLike({ ErrorCode: 403, ResponseCode: 404, ResponsePagePath: "/404.html" }),
-					Match.objectLike({ ErrorCode: 404, ResponseCode: 404, ResponsePagePath: "/404.html" }),
-				]),
-			}),
-		});
-	});
-
-	test("directory URLs are rewritten to index.html", () => {
-		template.hasResourceProperties("AWS::CloudFront::Function", {
-			FunctionConfig: Match.objectLike({ Runtime: "cloudfront-js-2.0" }),
 		});
 	});
 });

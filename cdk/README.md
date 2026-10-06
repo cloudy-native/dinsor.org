@@ -1,6 +1,6 @@
 # dinsor.org infrastructure
 
-AWS CDK stack for the static site: private S3 bucket, CloudFront with origin access control, ACM certificate (apex and `www`), Route 53 records, and security response headers.
+AWS CDK stack for the static site: S3 website bucket, CloudFront, ACM certificate (apex and `www`), Route 53 records, and security response headers.
 
 ## Deploy
 
@@ -21,7 +21,6 @@ bun run test
 
 ## Notes
 
-- The bucket is private. CloudFront is the only reader.
-- A CloudFront Function maps `/about` and `/about/` to `/about/index.html`.
-- Missing pages (403 or 404 from S3) return `/404.html` with status 404.
+- S3 website hosting serves `index.html` for directory URLs and `404.html` for missing pages.
+- CloudFront adds security headers (HSTS, CSP, `nosniff`, frame `DENY`, referrer and permissions policy). Scripts are external files (`assetsInlineLimit: 0` in `astro.config.mjs`), so the CSP needs no `unsafe-inline`.
 - Teardown deletes the bucket contents. The site is rebuilt from source.
