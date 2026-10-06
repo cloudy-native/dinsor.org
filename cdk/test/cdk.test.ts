@@ -60,4 +60,13 @@ describe("DinsorOrgStack", () => {
 			}),
 		});
 	});
+
+	test("deployment handler has headroom and does not wait on invalidation", () => {
+		template.hasResourceProperties("Custom::CDKBucketDeployment", {
+			WaitForDistributionInvalidation: false,
+		});
+		const fns = Object.values(template.findResources("AWS::Lambda::Function")) as any[];
+		const handler = fns.find((f) => f.Properties.Runtime?.startsWith("python"));
+		expect(handler.Properties.MemorySize).toBe(1024);
+	});
 });
