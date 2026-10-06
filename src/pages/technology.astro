@@ -1,6 +1,5 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Navbar from "../components/Navbar.astro";
 
 const title = "Technology | Dinsor";
 const description =
@@ -22,7 +21,6 @@ const toc = [
 ---
 
 <Layout title={title} description={description}>
-	<Navbar />
 	<div class="docs">
 		<article class="docs-prose">
 			<h1>Technology</h1>
@@ -129,9 +127,10 @@ const toc = [
 					is how most new UI gets styled. Utility classes keep design
 					decisions next to the markup, purge cleanly, and make
 					pixel-sensitive layouts faster than hunting through CSS files. This
-					site is the exception: it uses plain hand-written CSS, with the
-					Kami visual system of parchment canvas, ink-blue accent, and serif
-					headings.
+					site is the exception: plain CSS on top of
+					<a href="https://github.com/cloudy-native/dinsor-design" target="_blank" rel="noopener noreferrer">dinsor-design</a>,
+					my own design system of warm paper, one ink-green accent, and
+					serif headings.
 				</p>
 			</section>
 
